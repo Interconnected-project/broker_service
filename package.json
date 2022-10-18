@@ -1,7 +1,7 @@
 {
-  "name": "express-server-template",
-  "version": "0.2.2",
-  "description": "A template repository for an Express server, trying to provide a good architecture, good practices, CI and CD.",
+  "name": "broker_service",
+  "version": "0.0.1",
+  "description": "TODO",
   "main": "dist/index.js",
   "scripts": {
     "build": "npx tsc",
@@ -14,37 +14,29 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tale152/express-server-template.git"
+    "url": "git+https://github.com/Interconnected-project/broker_service"
   },
   "keywords": [],
   "author": "Alessandro Talmi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Tale152/express-server-template/issues"
+    "url": "https://github.com/Interconnected-project/broker_service/issues"
   },
-  "homepage": "https://github.com/Tale152/express-server-template#readme",
+  "homepage": "https://github.com/Interconnected-project/broker_service#readme",
   "dependencies": {
     "@jscpd/badge-reporter": "^3.4.5",
-    "@types/bcrypt": "^5.0.0",
-    "@types/jsonwebtoken": "^8.5.9",
-    "@types/mongoose": "^5.11.97",
     "@types/supertest": "^2.0.12",
-    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "jscpd": "^3.5.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.6.5",
-    "uuid": "^9.0.0"
+    "jscpd": "^3.5.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
     "@types/jest": "^28.1.6",
     "@types/node": "^18.11.0",
-    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "concurrently": "^7.4.0",
