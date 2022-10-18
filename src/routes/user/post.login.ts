@@ -1,10 +1,8 @@
 import {Request, Response} from 'express';
 
-import {EncryptedToken} from '../../core/entities/Token';
 import {UnpersistedUser} from '../../core/entities/User';
 import UserUseCases from '../../core/use_cases/UserUseCases';
 import {onError} from '../_common/onError';
-import {authenticationHandler} from '../_common/authentication';
 
 /**
  * Handler of the POST /user/login route

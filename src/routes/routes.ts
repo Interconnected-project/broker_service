@@ -1,21 +1,10 @@
-import {Express, Request, Response} from 'express';
-import MongooseUserPersistence from '../core/frameworks_and_drivers/persistence/MongooseUserPersistence';
-import BcryptEncryptionHandler from '../core/frameworks_and_drivers/security/BcryptEncryptionHandler';
-import JwtTokenGenerator from '../core/frameworks_and_drivers/security/JwtTokenGenerator';
+import {Express} from 'express';
 import UserUseCases from '../core/use_cases/UserUseCases';
 import userRegisterHandler from './user/post.register';
 import userLoginHandler from './user/post.login';
 import userGetByHandler from './user/get.userBy';
-import {EncryptedToken} from '../core/entities/Token';
 
-const tokenGenerator = new JwtTokenGenerator();
-const encryptionHandler = new BcryptEncryptionHandler();
-const userPersistence = new MongooseUserPersistence();
-const userUseCases = new UserUseCases(
-  userPersistence,
-  tokenGenerator,
-  encryptionHandler,
-);
+const userUseCases = new UserUseCases();
 
 /**
  * Binds rutes to the provider Express server instance.
@@ -26,18 +15,5 @@ export default function bindRoutes(server: Express): void {
 
   server.post('/user/login', userLoginHandler(userUseCases));
 
-  server.get('/user/get-by', verifyToken, userGetByHandler(userUseCases));
+  server.get('/user/get-by', userGetByHandler(userUseCases));
 }
-
-const verifyToken = (req: Request, res: Response, next: any) => {
-  const token = req.headers.token;
-  if (token !== undefined && typeof token === 'string') {
-    const decodedToken = tokenGenerator.decode(new EncryptedToken(token));
-    if (decodedToken !== undefined) {
-      req.query.requestId = decodedToken.id.trim();
-      next();
-      return;
-    }
-  }
-  res.sendStatus(401);
-};
