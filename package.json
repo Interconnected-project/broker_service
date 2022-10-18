@@ -97,7 +97,10 @@
       "json-summary"
     ],
     "collectCoverageFrom": [
-      "src/**/*.{js,ts,jsx,tsx}"
+      "src/**/*.{js,ts,jsx,tsx}",
+      "!src/index.ts",
+      "!src/server.ts",
+      "!src/setup/setup.ts"
     ],
     "coveragePathIgnorePatterns": [
       "<rootDir>/src/index.ts"
