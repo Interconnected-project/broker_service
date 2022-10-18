@@ -8,10 +8,6 @@ import dotenv from 'dotenv';
 export default class EnvVariablesSingleton {
   private static inst: EnvVariablesSingleton | undefined = undefined;
   private envPort: number;
-  private db: string;
-  private salt: number;
-  private secret: string;
-  private validity: string;
 
   /**
    * Private constructor, only exposing the static instance getter following
@@ -23,25 +19,6 @@ export default class EnvVariablesSingleton {
   private constructor() {
     dotenv.config();
     this.envPort = this.getNum(process.env.PORT, 'PORT');
-    this.db = this.getStr(process.env.DB_ADDRESS, 'DB_ADDRESS');
-    this.salt = this.getNum(process.env.ENCRYPTION_SALT, 'ENCRYPTION_SALT');
-    this.secret = this.getStr(process.env.TOKEN_SECRET, 'TOKEN_SECRET');
-    this.validity = this.getStr(process.env.TOKEN_VALIDITY, 'TOKEN_VALIDITY');
-  }
-
-  /**
-   * Executes checks on the specified string environment variable.
-   * @param {string | undefined} v the value of the environment variable
-   * @param {string} name the name to display in the error message should
-   * the variable be not defined or defined incorrectly
-   * @return {string} the type-safe string environment variable
-   * @throws if v is undefined, not a string or an empty string
-   */
-  private getStr(v: string | undefined, name: string): string {
-    if (v !== undefined && typeof v === 'string' && v.trim() !== '') {
-      return v.trim();
-    }
-    throw Error(this.errorString(v, name));
   }
 
   /**
@@ -91,36 +68,5 @@ export default class EnvVariablesSingleton {
    */
   get port(): number {
     return this.envPort;
-  }
-
-  /**
-   * @return {string} the type-safe value of the DB_ADDRESS environment variable
-   */
-  get dbAddress(): string {
-    return this.db;
-  }
-
-  /**
-   * @return {number} the type-safe value of the ENCRYPTION_SALT
-   * environment variable
-   */
-  get encryptionSalt(): number {
-    return this.salt;
-  }
-
-  /**
-   * @return {string} the type-safe value of the TOKEN_SECRET
-   * environment variable
-   */
-  get tokenSecret(): string {
-    return this.secret;
-  }
-
-  /**
-   * @return {string} the type-safe value of the TOKEN_VALIDITY
-   * environment variable
-   */
-  get tokenValidity(): string {
-    return this.validity;
   }
 }
