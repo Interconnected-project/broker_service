@@ -21,8 +21,8 @@ jobs:
         run: npm ci
       - name: Generate coverage report
         run: npm test
-      - name: Update coverage badge
-        run: npm run coverage:badge
+      # - name: Update coverage badge
+      #   run: npm run coverage:badge
       - name: Generate cpd report
         run: npm run cpd
       - name: Update cpd badge

@@ -3,7 +3,6 @@ TODO
 ## About this repository
 <font size=4>Technologies used:</font>  
 ![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![Express](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
 ![Socketio](https://img.shields.io/badge/Socket.io-010101?&style=for-the-badge&logo=Socket.io&logoColor=white)
 ![Jest](https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white)
 
@@ -12,9 +11,9 @@ TODO
 ![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)  
 
 <font size=4>Code quality:</font>  
-![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/Interconnected-project/broker_service)
-![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/github/Interconnected-project/broker_service)
-![](https://img.shields.io/badge/Coverage-90%25-83A603.svg?prefix=$coverage$)
+<!-- ![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/Interconnected-project/broker_service) -->
+<!-- ![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/github/Interconnected-project/broker_service) -->
+<!-- ![](https://img.shields.io/badge/Coverage-90%25-83A603.svg?prefix=$coverage$) -->
 ![CPD](.github/badges/jscpd-badge.svg)  
 <font size=4>Automation:</font>  
 ![CI](https://github.com/Interconnected-project/broker_service/actions/workflows/CI.yml/badge.svg)

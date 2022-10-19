@@ -70,14 +70,6 @@
     "coveragePathIgnorePatterns": [
       "<rootDir>/src/index.ts"
     ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 80,
-        "functions": 80,
-        "lines": 80,
-        "statements": 80
-      }
-    },
     "setupFiles": [
       "<rootDir>/test/utils/set_env_variables.ts"
     ]
