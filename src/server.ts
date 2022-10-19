@@ -1,9 +1,11 @@
-import express, {Express} from 'express';
+// setupServer(server);
 
-import {setupServer} from './setup/setup';
+import {Server} from 'socket.io';
 
-const server: Express = express();
+const server = new Server({ /* options */ });
 
-setupServer(server);
+server.on('connection', (socket) => {
+  console.log('aaa');
+});
 
 export default server;
