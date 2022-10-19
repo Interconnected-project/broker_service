@@ -18,11 +18,3 @@ jobs:
     secrets:
       registry_username: ${{secrets.DOCKERHUB_USERNAME}}
       registry_password: ${{secrets.DOCKERHUB_PASSWORD}}
-
-  deploy-heroku:
-    needs: test
-    uses: Interconnected-project/broker_service/.github/workflows/reusable-deploy-heroku.yml@master
-    with:
-      app_name: ${{ github.event.repository.name }}
-    secrets:
-      api_key: ${{secrets.HEROKU_API_KEY}}
