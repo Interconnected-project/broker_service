@@ -7,7 +7,7 @@ const server = new Server({
 });
 
 server.on('connection', (socket) => {
-  // TODO
+  console.log('New connection ' + socket.id);
 });
 
 export default server;
