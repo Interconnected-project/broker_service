@@ -1,7 +1,7 @@
 import SocketServer from '../common/SocketServer';
 import applyInvokingEndpointsHandlers from './handlers';
 
-const LOG_TAG = 'Invoking Endpoints';
+export const LOG_TAG = 'Invoking Endpoints';
 
 export default class InvokingEndpointsSocketServerSingleton {
   private static instance: InvokingEndpointsSocketServerSingleton | undefined =

@@ -1,7 +1,7 @@
 import SocketServer from '../common/SocketServer';
 import applyNodesHandlers from './handlers';
 
-const LOG_TAG = 'Nodes';
+export const LOG_TAG = 'Nodes';
 
 export default class NodesSocketServerSingleton {
   private static instance: NodesSocketServerSingleton | undefined = undefined;
