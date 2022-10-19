@@ -1,6 +1,6 @@
 import createServer from './common/server';
 import NodeConnectionsHubSingleton from './nodes/NodeConnectionsHubSingleton';
-import EnvVariablesSingleton from './setup/EnvVariablesSingleton';
+import EnvVariablesSingleton from './common/setup/EnvVariablesSingleton';
 
 createServer(
   'Nodes',
