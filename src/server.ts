@@ -1,11 +1,13 @@
 // setupServer(server);
 
-import {Server} from 'socket.io';
+import { Server } from 'socket.io';
 
-const server = new Server({ /* options */ });
+const server = new Server({
+  /* options */
+});
 
 server.on('connection', (socket) => {
-  console.log('aaa');
+  // TODO
 });
 
 export default server;
