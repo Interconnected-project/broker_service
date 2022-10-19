@@ -45,4 +45,44 @@ export default class SocketServer {
     this.server.listen(port);
     log(this.name, 'started on port ' + port);
   }
+
+  async broadcastMsg(channel: string, msg: unknown): Promise<void> {
+    return new Promise((resolve, reject) => {
+      try {
+        this.server.sockets.emit(channel, msg, { receivers: 'everyone' });
+        resolve();
+      } catch (e) {
+        log(
+          this.name,
+          'broadcast msg error\nchannel: ' +
+            channel +
+            '\nmsg: ' +
+            msg +
+            '\n' +
+            e
+        );
+        reject();
+      }
+    });
+  }
+
+  async sendMsg(id: string, channel: string, msg: unknown): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      try {
+        const s = this.hub.get(id);
+        if (s === undefined) {
+          resolve(false);
+        } else {
+          s.socket.emit(channel, msg);
+          resolve(true);
+        }
+      } catch (e) {
+        log(
+          this.name,
+          'send msg error\nchannel: ' + channel + '\nmsg: ' + msg + '\n' + e
+        );
+        reject();
+      }
+    });
+  }
 }
