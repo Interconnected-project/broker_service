@@ -11,7 +11,10 @@ export default class SocketServer {
 
   private hub: ConnectionsHub = new ConnectionsHub();
 
-  constructor(private name: string, applyHandlers: (socket: Socket) => void) {
+  constructor(
+    private name: string,
+    applyHandlers: (socket: Socket, connection: Connection) => void
+  ) {
     this.server.on('connection', (socket) => {
       let connection: Connection | undefined = undefined;
       const mac = socket.handshake.query.mac;
@@ -22,7 +25,7 @@ export default class SocketServer {
         connection = new Connection(mac, socket);
         if (this.hub.add(connection)) {
           log(name, 'new connection: ' + connection.id);
-          applyHandlers(socket);
+          applyHandlers(socket, connection);
         } else {
           log(
             name,

@@ -1,5 +1,7 @@
+import { Socket } from 'socket.io';
+
 import SocketServer from '../common/SocketServer';
-import applyNodesHandlers from './handlers';
+import Connection from '../common/Connection';
 
 export const LOG_TAG = 'Nodes';
 
@@ -8,7 +10,7 @@ export default class NodesSocketServerSingleton {
   private _server: SocketServer;
 
   private constructor() {
-    this._server = new SocketServer(LOG_TAG, applyNodesHandlers);
+    this._server = new SocketServer(LOG_TAG, applyHandlers);
   }
 
   static get server(): SocketServer {
@@ -17,4 +19,11 @@ export default class NodesSocketServerSingleton {
     }
     return NodesSocketServerSingleton.instance._server;
   }
+}
+
+function applyHandlers(socket: Socket, connection: Connection) {
+  socket.on('star wars', function (from, msg) {
+    console.log(from + ': ' + msg);
+    socket.emit('star wars', 'Grievous', 'General Kenobi');
+  });
 }

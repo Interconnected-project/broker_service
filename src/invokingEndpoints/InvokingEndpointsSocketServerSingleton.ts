@@ -1,5 +1,8 @@
+import { Socket } from 'socket.io';
+
 import SocketServer from '../common/SocketServer';
-import applyInvokingEndpointsHandlers from './handlers';
+import Connection from '../common/Connection';
+import mapReduceServiceMasterRecruitment from './handlers/mapReduceServiceMasterRecruitment';
 
 export const LOG_TAG = 'Invoking Endpoints';
 
@@ -9,7 +12,7 @@ export default class InvokingEndpointsSocketServerSingleton {
   private _server: SocketServer;
 
   private constructor() {
-    this._server = new SocketServer(LOG_TAG, applyInvokingEndpointsHandlers);
+    this._server = new SocketServer(LOG_TAG, applyHandlers);
   }
 
   static get server(): SocketServer {
@@ -19,4 +22,8 @@ export default class InvokingEndpointsSocketServerSingleton {
     }
     return InvokingEndpointsSocketServerSingleton.instance._server;
   }
+}
+
+function applyHandlers(socket: Socket, connection: Connection) {
+  mapReduceServiceMasterRecruitment(socket, connection);
 }
