@@ -1,15 +1,15 @@
 import { Server } from 'socket.io';
-import NodeConnection from './NodeConnection';
+import Connection from '../common/Connection';
 import NodeConnectionsHubSingleton from './NodeConnectionsHubSingleton';
 
 const nodesServer = new Server({
   /* options */
 });
 
-const nodeConnectionsHub = NodeConnectionsHubSingleton.instance;
+const nodeConnectionsHub = NodeConnectionsHubSingleton.hub;
 
 nodesServer.on('connection', (socket) => {
-  let nodeConnection: NodeConnection | undefined = undefined;
+  let nodeConnection: Connection | undefined = undefined;
 
   console.log('New Node connection ' + socket.id);
   const mac = socket.handshake.query.mac;
@@ -17,7 +17,7 @@ nodesServer.on('connection', (socket) => {
     console.log('No mac provided');
     socket.disconnect();
   } else {
-    nodeConnection = new NodeConnection(mac, socket);
+    nodeConnection = new Connection(mac, socket);
     nodeConnectionsHub.add(nodeConnection);
 
     socket.on('CH01', function (from, msg) {
