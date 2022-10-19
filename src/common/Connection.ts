@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io';
 
-export default class NodeConnection {
+export default class Connection {
   private _id: string;
   private _socket: Socket;
 
