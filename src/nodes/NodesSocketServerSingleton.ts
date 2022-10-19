@@ -2,6 +2,8 @@ import { Socket } from 'socket.io';
 
 import SocketServer from '../common/SocketServer';
 import Connection from '../common/Connection';
+import Channels from '../common/Channels';
+import { logNodes as log } from '../common/util/log';
 
 export const LOG_TAG = 'Nodes';
 
@@ -22,8 +24,8 @@ export default class NodesSocketServerSingleton {
 }
 
 function applyHandlers(socket: Socket, connection: Connection) {
-  socket.on('star wars', function (from, msg) {
-    console.log(from + ': ' + msg);
-    socket.emit('star wars', 'Grievous', 'General Kenobi');
+  socket.on(Channels.TEST, function () {
+    log(Channels.TEST + ' (' + connection.id + ')');
+    socket.emit(Channels.TEST, 'ack');
   });
 }
