@@ -2,7 +2,7 @@ import { Socket } from 'socket.io';
 
 import SocketServer from '../common/SocketServer';
 import Connection from '../common/Connection';
-import mapReduceServiceMasterRecruitment from './handlers/mapReduceServiceMasterRecruitment';
+import mapReduceServiceMasterRecruitment from './handlers/recruitment';
 
 export const LOG_TAG = 'Invoking Endpoints';
 

@@ -1,1 +1,0 @@
-export const MAPREDUCE_SERVICE_MASTER_RECRUITMENT = 'MRS - Mast recr';
