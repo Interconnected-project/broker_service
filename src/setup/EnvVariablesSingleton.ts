@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
  */
 export default class EnvVariablesSingleton {
   private static inst: EnvVariablesSingleton | undefined = undefined;
-  private envPort: number;
+  private _nodesPort: number;
 
   /**
    * Private constructor, only exposing the static instance getter following
@@ -18,7 +18,7 @@ export default class EnvVariablesSingleton {
    */
   private constructor() {
     dotenv.config();
-    this.envPort = this.getNum(process.env.PORT, 'PORT');
+    this._nodesPort = this.getNum(process.env.NODES_PORT, 'NODES_PORT');
   }
 
   /**
@@ -64,9 +64,9 @@ export default class EnvVariablesSingleton {
   }
 
   /**
-   * @return {number} the type-safe value of the PORT environment variable
+   * @return {number} the type-safe value of the NODES_PORT environment variable
    */
-  get port(): number {
-    return this.envPort;
+  get nodesPort(): number {
+    return this._nodesPort;
   }
 }

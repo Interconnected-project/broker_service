@@ -1,5 +1,7 @@
-import server from './server';
+import nodesServer from './nodes/nodesServer';
 import EnvVariablesSingleton from './setup/EnvVariablesSingleton';
 
-server.listen(EnvVariablesSingleton.instance.port);
-console.log('Server started on port ' + EnvVariablesSingleton.instance.port);
+nodesServer.listen(EnvVariablesSingleton.instance.nodesPort);
+console.log(
+  'Nodes server started on port ' + EnvVariablesSingleton.instance.nodesPort
+);
