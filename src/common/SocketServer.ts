@@ -6,7 +6,10 @@ import log from './util/log';
 
 export default class SocketServer {
   private server = new Server({
-    /* options */
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST'],
+    },
   });
 
   private hub: ConnectionsHub = new ConnectionsHub();
