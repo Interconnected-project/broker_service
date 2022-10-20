@@ -19,7 +19,6 @@ TODO
 <font size=4>Automation:</font>  
 ![CI](https://github.com/Interconnected-project/broker_service/actions/workflows/CI.yml/badge.svg)
 ![CD](https://github.com/Interconnected-project/broker_service/actions/workflows/CD.yml/badge.svg)
-![ESLint security report](https://github.com/Interconnected-project/broker_service/actions/workflows/eslint-security-report.yml/badge.svg)
 
 <font size=4>Repository activities:</font>  
 ![GitHub last commit](https://img.shields.io/github/last-commit/Interconnected-project/broker_service)
