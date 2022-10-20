@@ -9,6 +9,7 @@ export default class EnvVariablesSingleton {
   private static inst: EnvVariablesSingleton | undefined = undefined;
   private _nodesPort: number;
   private _invokingEndpointsPort: number;
+  private _enableLog = true;
 
   /**
    * Private constructor, only exposing the static instance getter following
@@ -24,6 +25,18 @@ export default class EnvVariablesSingleton {
       process.env.INVOKING_ENDPOINTS_PORT,
       'INVOKING_ENDPOINTS_PORT'
     );
+    if (process.env.ENABLE_LOG !== undefined) {
+      try {
+        const val = process.env.ENABLE_LOG.toString().toLowerCase();
+        if (val === 'true') {
+          this._enableLog = true;
+        } else if (val === 'false') {
+          this._enableLog = false;
+        }
+      } catch {
+        this._enableLog = true;
+      }
+    }
   }
 
   /**
@@ -81,5 +94,13 @@ export default class EnvVariablesSingleton {
    */
   get invokingEndpointsPort(): number {
     return this._invokingEndpointsPort;
+  }
+
+  /**
+   * @return {boolean} the type-safe value of the
+   * ENABLE_LOG environment variable
+   */
+  get isLogEnabled(): boolean {
+    return this._enableLog;
   }
 }
