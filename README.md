@@ -12,10 +12,10 @@ TODO
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)  
 
 <font size=4>Code quality:</font>  
+![CPD](.github/badges/jscpd-badge.svg) 
 <!-- ![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/Interconnected-project/broker_service) -->
 <!-- ![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/github/Interconnected-project/broker_service) -->
-<!-- ![](https://img.shields.io/badge/Coverage-90%25-83A603.svg?prefix=$coverage$) -->
-![CPD](.github/badges/jscpd-badge.svg)  
+<!-- ![](https://img.shields.io/badge/Coverage-90%25-83A603.svg?prefix=$coverage$) --> 
 <font size=4>Automation:</font>  
 ![CI](https://github.com/Interconnected-project/broker_service/actions/workflows/CI.yml/badge.svg)
 ![CD](https://github.com/Interconnected-project/broker_service/actions/workflows/CD.yml/badge.svg)
