@@ -8,9 +8,13 @@ import Channels from '../../common/Channels';
 export default function recruitment(socket: Socket, connection: Connection) {
   socket.on(Channels.RECRUITMENT, function (payload) {
     log('Recruitment request (' + connection.id + ')\n' + payload);
-    NodesSocketServerSingleton.server.broadcastMsg(
-      Channels.RECRUITMENT,
-      payload
-    );
+    if (payload === undefined || payload === null) {
+      log('No payload, did not broadcast recruitment request');
+    } else {
+      NodesSocketServerSingleton.server.broadcastMsg(
+        Channels.RECRUITMENT,
+        payload
+      );
+    }
   });
 }
