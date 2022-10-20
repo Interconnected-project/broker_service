@@ -16,6 +16,6 @@ jobs:
     uses: Interconnected-project/broker_service/.github/workflows/reusable-cpd.yml@master
 
   update-badges:
-    if: ${{ github.actor != 'dependabot[bot]' }}
+    if: ${{ github.actor != 'dependabot[bot]' }} && ${{ github.actor != 'github-actions[bot]'}}
     needs: [test, cpd]
     uses: Interconnected-project/broker_service/.github/workflows/reusable-badges.yml@master
