@@ -1,3 +1,4 @@
+import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
 
 import Connection from './Connection';
@@ -5,10 +6,11 @@ import ConnectionsHub from './ConnectionsHub';
 import log from './util/log';
 
 export default class SocketServer {
-  private server = new Server({
+  private httpServer = createServer();
+  private server = new Server(this.httpServer, {
     cors: {
       origin: '*',
-      methods: ['GET', 'POST'],
+      methods: '*',
     },
   });
 
