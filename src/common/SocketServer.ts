@@ -50,7 +50,7 @@ export default class SocketServer {
   }
 
   start(port: number) {
-    this.server.listen(port);
+    this.httpServer.listen(port);
     log(this.name, 'started on port ' + port);
   }
 
