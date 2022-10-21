@@ -7,8 +7,7 @@ import dotenv from 'dotenv';
  */
 export default class EnvVariablesSingleton {
   private static inst: EnvVariablesSingleton | undefined = undefined;
-  private _nodesPort: number;
-  private _invokingEndpointsPort: number;
+  private _port: number;
   private _enableLog = true;
 
   /**
@@ -20,11 +19,7 @@ export default class EnvVariablesSingleton {
    */
   private constructor() {
     dotenv.config();
-    this._nodesPort = this.getNum(process.env.NODES_PORT, 'NODES_PORT');
-    this._invokingEndpointsPort = this.getNum(
-      process.env.INVOKING_ENDPOINTS_PORT,
-      'INVOKING_ENDPOINTS_PORT'
-    );
+    this._port = this.getNum(process.env.PORT, 'PORT');
     if (process.env.ENABLE_LOG !== undefined) {
       try {
         const val = process.env.ENABLE_LOG.toString().toLowerCase();
@@ -82,18 +77,10 @@ export default class EnvVariablesSingleton {
   }
 
   /**
-   * @return {number} the type-safe value of the NODES_PORT environment variable
+   * @return {number} the type-safe value of the PORT environment variable
    */
-  get nodesPort(): number {
-    return this._nodesPort;
-  }
-
-  /**
-   * @return {number} the type-safe value of
-   * the INVOKING_ENDPOINTS_PORT environment variable
-   */
-  get invokingEndpointsPort(): number {
-    return this._invokingEndpointsPort;
+  get port(): number {
+    return this._port;
   }
 
   /**

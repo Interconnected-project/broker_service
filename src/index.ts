@@ -1,8 +1,11 @@
 import EnvVariablesSingleton from './common/setup/EnvVariablesSingleton';
-import NodesSocketServerSingleton from './nodes/NodesSocketServerSingleton';
-import InvokingEndpointsSocketServerSingleton from './invokingEndpoints/InvokingEndpointsSocketServerSingleton';
+import applyInvokingEndpointHandlers from './invokingEndpoints/applyInvokingEndpointHandlers';
+import SocketServer from './SocketServer';
 
 const env = EnvVariablesSingleton.instance;
+const server = new SocketServer(
+  applyInvokingEndpointHandlers,
+  applyInvokingEndpointHandlers
+);
 
-NodesSocketServerSingleton.server.start(env.nodesPort);
-InvokingEndpointsSocketServerSingleton.server.start(env.invokingEndpointsPort);
+server.start(env.port);

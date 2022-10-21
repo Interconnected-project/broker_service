@@ -1,20 +1,20 @@
-import { Socket } from 'socket.io';
-import Connection from '../../common/Connection';
-import NodesSocketServerSingleton from '../../nodes/NodesSocketServerSingleton';
-
-import { logInvokingEndpoints as log } from '../../common/util/log';
+import { Socket, Server } from 'socket.io';
+import { logInvokingEndpoint as log } from '../../common/util/log';
 import Channels from '../../common/Channels';
 
-export default function recruitment(socket: Socket, connection: Connection) {
+export default function recruitment(
+  server: Server,
+  socket: Socket,
+  id: string
+) {
   socket.on(Channels.RECRUITMENT, function (payload) {
-    log('Recruitment request (' + connection.id + ')\n' + payload);
+    log(id, 'Recruitment request\n' + payload);
     if (payload === undefined || payload === null) {
-      log('No payload, did not broadcast recruitment request');
+      log(id, 'No payload, did not broadcast recruitment request');
     } else {
-      NodesSocketServerSingleton.server.broadcastMsg(
-        Channels.RECRUITMENT,
-        payload
-      );
+      server.sockets
+        .to('NODES')
+        .emit(Channels.RECRUITMENT, payload, { receivers: 'everyone' });
     }
   });
 }

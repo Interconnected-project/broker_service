@@ -1,6 +1,8 @@
-import { LOG_TAG as INVOKING_ENDPOINT_TAG } from '../../invokingEndpoints/InvokingEndpointsSocketServerSingleton';
-import { LOG_TAG as NODES_TAG } from '../../nodes/NodesSocketServerSingleton';
 import EnvVariablesSingleton from '../setup/EnvVariablesSingleton';
+
+const SERVER_TAG = 'SERVER';
+const NODE_TAG = 'Node';
+const INVOKING_ENDPOINT_TAG = 'Invoking Endpoint';
 
 const isLogEnabled = EnvVariablesSingleton.instance.isLogEnabled;
 
@@ -10,10 +12,14 @@ export default function log(tag: string, msg: string) {
   }
 }
 
-export function logNodes(msg: string) {
-  log(NODES_TAG, msg);
+export function logServer(msg: string) {
+  log(SERVER_TAG, msg);
 }
 
-export function logInvokingEndpoints(msg: string) {
-  log(INVOKING_ENDPOINT_TAG, msg);
+export function logNode(id: string, msg: string) {
+  log(NODE_TAG + ' ' + id, msg);
+}
+
+export function logInvokingEndpoint(id: string, msg: string) {
+  log(INVOKING_ENDPOINT_TAG + ' ' + id, msg);
 }

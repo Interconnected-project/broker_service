@@ -3,9 +3,11 @@ import { Socket } from 'socket.io';
 export default class Connection {
   private _id: string;
   private _socket: Socket;
+  private _role: string;
 
-  constructor(id: string, socket: Socket) {
+  constructor(id: string, role: string, socket: Socket) {
     this._id = id;
+    this._role = role;
     this._socket = socket;
   }
 
@@ -17,7 +19,7 @@ export default class Connection {
     return this._socket;
   }
 
-  get address(): string {
-    return this._socket.handshake.address;
+  get role(): string {
+    return this._role;
   }
 }
