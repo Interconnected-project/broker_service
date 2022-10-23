@@ -10,9 +10,9 @@ import joinRoom from '../common/joinRoom';
 import applyNodeHandlers from './nodes/applyNodeHandlers';
 import RecruitmentRequestBulletinBoard from './RecruitmentRequestsBulletinBoard';
 import Channels from '../common/enums/Channels';
-import ConnectionsHub from '../common/connectionsHub/ConnectionsHub';
 import Connection from '../common/connectionsHub/Connection';
 import InvokingEndpointHub from './invokingEndpoints/InvokingEndpointsHub';
+import NodesHub from './nodes/NodesHub';
 
 export default class BrokerServer {
   private httpServer = createServer();
@@ -23,8 +23,6 @@ export default class BrokerServer {
     },
   });
 
-  private nodes = new ConnectionsHub();
-
   constructor() {
     this.server.on('connection', (socket) => {
       const query = socket.handshake.query;
@@ -34,12 +32,12 @@ export default class BrokerServer {
         if (role === Roles.NODE) {
           applyNodeHandlers(connection);
           joinRoom(socket, Rooms.NODES);
-          this.nodes.add(connection);
+          NodesHub.connections.add(connection);
           RecruitmentRequestBulletinBoard.pendingRequestsPayload.forEach((p) =>
             socket.emit(Channels.RECRUITMENT_BROADCAST, p)
           );
         } else {
-          applyInvokingEndpointHandlers(this.server, connection, this.nodes);
+          applyInvokingEndpointHandlers(this.server, connection);
           joinRoom(socket, Rooms.INVOKING_ENDPOINTS);
           InvokingEndpointHub.connections.add(connection);
         }
@@ -47,7 +45,7 @@ export default class BrokerServer {
 
         socket.on('disconnecting', () => {
           if (role === Roles.NODE) {
-            this.nodes.remove(connection.id);
+            NodesHub.connections.remove(connection.id);
           } else {
             InvokingEndpointHub.connections.remove(connection.id);
             RecruitmentRequestBulletinBoard.revokeRequests(connection.id);
