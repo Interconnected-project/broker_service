@@ -1,6 +1,6 @@
 import { Server } from 'socket.io';
 import Connection from '../Connection';
-import ConnectionsHub from '../ConnectionsHub';
+import ConnectionsHub from '../../common/connectionsHub/ConnectionsHub';
 import connectionAccept from './handlers/connectionAccept';
 
 import recruitmentRequestHandler from './handlers/recruitmentRequest/recruitmentRequestHandler';

@@ -1,5 +1,5 @@
-import Connection from '../Connection';
-import ConnectionsHub from '../ConnectionsHub';
+import Connection from '../../common/connectionsHub/Connection';
+import ConnectionsHub from '../../common/connectionsHub/ConnectionsHub';
 
 import recruitmentAcceptHandler from './handlers/recruitmentAccept/recruitmentAcceptHandler';
 

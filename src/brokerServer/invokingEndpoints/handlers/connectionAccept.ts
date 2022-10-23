@@ -1,7 +1,7 @@
 import { logInvokingEndpoint as log } from '../../../common/util/log';
 import Channels from '../../../common/enums/Channels';
 import Connection from '../../Connection';
-import ConnectionsHub from '../../ConnectionsHub';
+import ConnectionsHub from '../../../common/connectionsHub/ConnectionsHub';
 
 export default function connectionAccept(
   connection: Connection,
