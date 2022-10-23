@@ -20,16 +20,16 @@ export default class RecruitmentRequestBulletinBoard {
   static acceptRequest(
     invokingEndpointId: string,
     operationId: string
-  ): boolean {
+  ): RecruitmentRequest | undefined {
     const request = this.find(invokingEndpointId, operationId);
     if (request === undefined) {
-      return false;
+      return undefined;
     }
     request.increaseServedNodes();
     if (request.isFulfilled) {
       this.requests.splice(this.requests.indexOf(request), 1);
     }
-    return true;
+    return request;
   }
 
   private static find(
