@@ -1,4 +1,4 @@
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 import { logInvokingEndpoint as log } from '../../../../common/util/log';
 import { broadcast } from '../../../BrokerServer';
@@ -15,7 +15,10 @@ export default function recruitmentRequestHandler(
 ) {
   connection.socket.on(Channels.RECRUITMENT_REQUEST, function (payload) {
     try {
-      const recruitmentRequest = buildRecruitingRequest(payload);
+      const recruitmentRequest = buildRecruitingRequest(
+        connection.socket,
+        payload
+      );
       if (RecruitmentRequestBulletinBoard.publishRequest(recruitmentRequest)) {
         broadcast(server, Rooms.NODES, Channels.RECRUITMENT_BROADCAST, payload);
         log(
@@ -33,9 +36,13 @@ export default function recruitmentRequestHandler(
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function buildRecruitingRequest(payload: any): RecruitmentRequest {
+function buildRecruitingRequest(
+  socket: Socket,
+  payload: any
+): RecruitmentRequest {
   const recruitmentRequestPayload = new RecruitmentRequestPayload(payload);
   return new RecruitmentRequest(
+    socket,
     recruitmentRequestPayload.invokingEndpointId,
     recruitmentRequestPayload.operationId,
     recruitmentRequestPayload.nodesToReach
