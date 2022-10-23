@@ -7,11 +7,12 @@ import Rooms from '../common/enums/Rooms';
 import { logBrokerServer as log } from '../common/util/log';
 import applyInvokingEndpointHandlers from './invokingEndpoints/applyInvokingEndpointHandlers';
 import joinRoom from '../common/joinRoom';
-import ConnectionsHub from '../common/connectionsHub/ConnectionsHub';
-import Connection from '../common/connectionsHub/ConnectionsHub';
 import applyNodeHandlers from './nodes/applyNodeHandlers';
 import RecruitmentRequestBulletinBoard from './RecruitmentRequestsBulletinBoard';
 import Channels from '../common/enums/Channels';
+import ConnectionsHub from '../common/connectionsHub/ConnectionsHub';
+import Connection from '../common/connectionsHub/Connection';
+import InvokingEndpointHub from './invokingEndpoints/InvokingEndpointsHub';
 
 export default class BrokerServer {
   private httpServer = createServer();
@@ -23,7 +24,6 @@ export default class BrokerServer {
   });
 
   private nodes = new ConnectionsHub();
-  private invokingEndpoints = new ConnectionsHub();
 
   constructor() {
     this.server.on('connection', (socket) => {
@@ -32,7 +32,7 @@ export default class BrokerServer {
         const connection = new Connection(this.getId(query), socket);
         const role = this.getRole(query);
         if (role === Roles.NODE) {
-          applyNodeHandlers(connection, this.invokingEndpoints);
+          applyNodeHandlers(connection);
           joinRoom(socket, Rooms.NODES);
           this.nodes.add(connection);
           RecruitmentRequestBulletinBoard.pendingRequestsPayload.forEach((p) =>
@@ -41,7 +41,7 @@ export default class BrokerServer {
         } else {
           applyInvokingEndpointHandlers(this.server, connection, this.nodes);
           joinRoom(socket, Rooms.INVOKING_ENDPOINTS);
-          this.invokingEndpoints.add(connection);
+          InvokingEndpointHub.connections.add(connection);
         }
         log(role + ' connected: ' + connection.id);
 
@@ -49,7 +49,7 @@ export default class BrokerServer {
           if (role === Roles.NODE) {
             this.nodes.remove(connection.id);
           } else {
-            this.invokingEndpoints.remove(connection.id);
+            InvokingEndpointHub.connections.remove(connection.id);
             RecruitmentRequestBulletinBoard.revokeRequests(connection.id);
           }
           log(role + ' disconnected: ' + connection.id);

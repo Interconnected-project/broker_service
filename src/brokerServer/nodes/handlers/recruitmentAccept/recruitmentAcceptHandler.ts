@@ -1,8 +1,8 @@
 import Channels from '../../../../common/enums/Channels';
-import Connection from '../../../Connection';
 import RecruitmentRequestBulletinBoard from '../../../RecruitmentRequestsBulletinBoard';
 import RecruitmentAcceptPayload from './RecruitmentAcceptPayload';
 import { logNode as log } from '../../../../common/util/log';
+import Connection from '../../../../common/connectionsHub/Connection';
 
 export default function recruitmentAcceptHandler(connection: Connection) {
   connection.socket.on(Channels.RECRUITMENT_ACCEPT, function (payload) {

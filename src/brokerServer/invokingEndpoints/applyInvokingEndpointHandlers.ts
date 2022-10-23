@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import Connection from '../Connection';
+import Connection from '../../common/connectionsHub/Connection';
 import ConnectionsHub from '../../common/connectionsHub/ConnectionsHub';
 import connectionAccept from './handlers/connectionAccept';
 
