@@ -1,11 +1,11 @@
 import Connection from '../Connection';
 import ConnectionsHub from '../ConnectionsHub';
 
-import recruitmentAccept from './handlers/recruitmentAccept';
+import recruitmentAcceptHandler from './handlers/recruitmentAccept/recruitmentAcceptHandler';
 
 export default function applyNodeHandlers(
   connection: Connection,
   invokingEndpoints: ConnectionsHub
 ) {
-  recruitmentAccept(connection, invokingEndpoints);
+  recruitmentAcceptHandler(connection);
 }

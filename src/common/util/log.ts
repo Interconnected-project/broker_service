@@ -21,8 +21,8 @@ export function logP2PServer(msg: string) {
   log(P2P_SERVER_TAG, msg);
 }
 
-export function logNode(id: string, msg: string) {
-  log(NODE_TAG + ' ' + id, msg);
+export function logNode(id: string, channel: string, msg: string) {
+  log(NODE_TAG + ' {' + channel + '}(' + id + ')', msg);
 }
 
 export function logInvokingEndpoint(id: string, channel: string, msg: string) {

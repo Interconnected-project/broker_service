@@ -32,6 +32,12 @@ export default class RecruitmentRequestBulletinBoard {
     return request;
   }
 
+  static revokeRequests(invokingEndpointId: string): void {
+    this.requests = this.requests.filter((r) => {
+      return r.invokingEndpointId !== invokingEndpointId;
+    });
+  }
+
   private static find(
     invokingEndpointId: string,
     operationId: string

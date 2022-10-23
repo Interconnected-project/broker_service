@@ -10,6 +10,7 @@ import joinRoom from '../common/joinRoom';
 import ConnectionsHub from './ConnectionsHub';
 import Connection from './Connection';
 import applyNodeHandlers from './nodes/applyNodeHandlers';
+import RecruitmentRequestBulletinBoard from './RecruitmentRequestsBulletinBoard';
 
 export default class BrokerServer {
   private httpServer = createServer();
@@ -45,6 +46,7 @@ export default class BrokerServer {
             this.nodes.remove(connection.id);
           } else {
             this.invokingEndpoints.remove(connection.id);
+            RecruitmentRequestBulletinBoard.revokeRequests(connection.id);
           }
           log(role + ' disconnected: ' + connection.id);
         });

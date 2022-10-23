@@ -15,6 +15,10 @@ export default class Channels {
     return 'RECRUITMENT_ACCEPT';
   }
 
+  static get OFFER_NODE(): string {
+    return 'OFFER_NODE';
+  }
+
   static get CONNECTION_ATTEMPT(): string {
     return 'CONNECTION_ATTEMPT';
   }
