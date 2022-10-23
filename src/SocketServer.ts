@@ -1,6 +1,9 @@
 import { createServer } from 'http';
 import { ParsedUrlQuery } from 'querystring';
 import { Server, Socket } from 'socket.io';
+import Roles from './common/Roles';
+import Rooms from './common/Rooms';
+import { joinRoom } from './common/serverOperations';
 import { logServer as log } from './common/util/log';
 
 export default class SocketServer {
@@ -25,21 +28,17 @@ export default class SocketServer {
       try {
         const id = this.getId(query);
         const role = this.getRole(query);
-        if (role === 'NODE') {
+        if (role === Roles.NODE) {
           applyNodeHandlers(this.server, socket, id);
-          socket.join('NODES');
-          log('Node connected: ' + id);
+          joinRoom(socket, Rooms.NODES);
         } else {
           applyInvokingEndpointHandlers(this.server, socket, id);
-          socket.join('INVOKING_ENDPOINTS');
-          log('Invoking Endpoint connected: ' + id);
+          joinRoom(socket, Rooms.INVOKING_ENDPOINTS);
         }
+        log(role + ' connected: ' + id);
+
         socket.on('disconnecting', () => {
-          if (role === 'NODE') {
-            log('Node disconnected: ' + id);
-          } else {
-            log('Invoking Endpoint disconnected: ' + id);
-          }
+          log(role + ' disconnected: ' + id);
         });
       } catch {
         log('Connection refused: wrong query parameters');
