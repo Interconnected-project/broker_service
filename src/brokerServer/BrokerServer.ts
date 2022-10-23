@@ -2,8 +2,8 @@ import { createServer } from 'http';
 import { ParsedUrlQuery } from 'querystring';
 import { Server } from 'socket.io';
 
-import Roles from '../common/Roles';
-import Rooms from './Rooms';
+import Roles from '../common/enums/Roles';
+import Rooms from '../common/enums/Rooms';
 import { logBrokerServer as log } from '../common/util/log';
 import applyInvokingEndpointHandlers from './invokingEndpoints/applyInvokingEndpointHandlers';
 import joinRoom from '../common/joinRoom';
@@ -11,7 +11,7 @@ import ConnectionsHub from './ConnectionsHub';
 import Connection from './Connection';
 import applyNodeHandlers from './nodes/applyNodeHandlers';
 import RecruitmentRequestBulletinBoard from './RecruitmentRequestsBulletinBoard';
-import Channels from './Channels';
+import Channels from '../common/enums/Channels';
 
 export default class BrokerServer {
   private httpServer = createServer();

@@ -2,11 +2,11 @@ import { Server, Socket } from 'socket.io';
 
 import { logInvokingEndpoint as log } from '../../../../common/util/log';
 import { broadcast } from '../../../BrokerServer';
-import Channels from '../../../Channels';
+import Channels from '../../../../common/enums/Channels';
 import Connection from '../../../Connection';
 import RecruitmentRequest from '../../../RecruitmentRequest';
 import RecruitmentRequestBulletinBoard from '../../../RecruitmentRequestsBulletinBoard';
-import Rooms from '../../../Rooms';
+import Rooms from '../../../../common/enums/Rooms';
 import RecruitmentRequestPayload from './RecruitmentRequestPayload';
 
 export default function recruitmentRequestHandler(

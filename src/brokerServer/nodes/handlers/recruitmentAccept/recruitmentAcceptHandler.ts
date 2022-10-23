@@ -1,4 +1,4 @@
-import Channels from '../../../Channels';
+import Channels from '../../../../common/enums/Channels';
 import Connection from '../../../Connection';
 import RecruitmentRequestBulletinBoard from '../../../RecruitmentRequestsBulletinBoard';
 import RecruitmentAcceptPayload from './RecruitmentAcceptPayload';
