@@ -11,6 +11,10 @@ export default class Channels {
     return 'RECRUITMENT_BROADCAST';
   }
 
+  static get JOIN(): string {
+    return 'JOIN';
+  }
+
   static get TEST(): string {
     return 'TEST';
   }

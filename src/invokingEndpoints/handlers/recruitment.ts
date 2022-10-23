@@ -54,7 +54,7 @@ function logSuccess(
     invokingEndpointId,
     'joined room ' +
       payload.roomId +
-      ' broadcasted recruitment request:\n' +
+      ', broadcasted recruitment request:\n' +
       JSON.stringify(payload, null, 2)
   );
 }

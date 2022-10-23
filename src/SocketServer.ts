@@ -1,6 +1,8 @@
 import { createServer } from 'http';
 import { ParsedUrlQuery } from 'querystring';
 import { Server, Socket } from 'socket.io';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const p2p = require('socket.io-p2p-server').Server;
 import Roles from './common/Roles';
 import Rooms from './common/Rooms';
 import { joinRoom } from './common/serverOperations';
@@ -23,6 +25,7 @@ export default class SocketServer {
       id: string
     ) => void
   ) {
+    this.server.use(p2p);
     this.server.on('connection', (socket) => {
       const query = socket.handshake.query;
       try {
