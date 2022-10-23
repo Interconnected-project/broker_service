@@ -11,16 +11,10 @@ export default function recruitmentRequest(
 ) {
   connection.socket.on(Channels.RECRUITMENT_REQUEST, function (payload) {
     broadcast(server, Rooms.NODES, Channels.RECRUITMENT_BROADCAST, payload);
-    logSuccess(connection.id);
+    log(
+      connection.id,
+      Channels.RECRUITMENT_REQUEST,
+      'broadcasting ' + Channels.RECRUITMENT_BROADCAST + ' to Nodes'
+    );
   });
-}
-
-function logSuccess(invokingEndpointId: string): void {
-  log(
-    invokingEndpointId,
-    'accepted ' +
-      Channels.RECRUITMENT_REQUEST +
-      '; sent ' +
-      Channels.RECRUITMENT_BROADCAST
-  );
 }

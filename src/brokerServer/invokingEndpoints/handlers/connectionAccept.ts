@@ -11,17 +11,7 @@ export default function connectionAccept(
     const node = nodes.get(payload.nodeId);
     if (node !== undefined) {
       node.socket.emit(Channels.COMPLETE_CONNECTION, payload);
-      logSuccess(connection.id);
+      //TODO log
     }
   });
-}
-
-function logSuccess(invokingEndpointId: string): void {
-  log(
-    invokingEndpointId,
-    'accepted ' +
-      Channels.CONNECTION_ACCEPT +
-      '; sent ' +
-      Channels.COMPLETE_CONNECTION
-  );
 }

@@ -25,6 +25,6 @@ export function logNode(id: string, msg: string) {
   log(NODE_TAG + ' ' + id, msg);
 }
 
-export function logInvokingEndpoint(id: string, msg: string) {
-  log(INVOKING_ENDPOINT_TAG + ' ' + id, msg);
+export function logInvokingEndpoint(id: string, channel: string, msg: string) {
+  log(INVOKING_ENDPOINT_TAG + ' {' + channel + '}(' + id + ')', msg);
 }
