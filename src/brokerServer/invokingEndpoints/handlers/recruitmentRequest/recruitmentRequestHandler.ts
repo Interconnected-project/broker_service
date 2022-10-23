@@ -35,9 +35,9 @@ export default function recruitmentRequestHandler(
   });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function buildRecruitingRequest(
   socket: Socket,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload: any
 ): RecruitmentRequest {
   const recruitmentRequestPayload = new RecruitmentRequestPayload(payload);
