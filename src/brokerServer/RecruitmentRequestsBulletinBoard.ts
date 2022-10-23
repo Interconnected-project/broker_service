@@ -51,6 +51,13 @@ export default class RecruitmentRequestBulletinBoard {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static get pendingRequestsPayload(): any[] {
+    return this.requests.map((r) => {
+      return r.payload;
+    });
+  }
+
   private static find(
     invokingEndpointId: string,
     operationId: string

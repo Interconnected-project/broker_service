@@ -45,7 +45,8 @@ function buildRecruitingRequest(
     socket,
     recruitmentRequestPayload.invokingEndpointId,
     recruitmentRequestPayload.operationId,
-    recruitmentRequestPayload.nodesToReach
+    recruitmentRequestPayload.nodesToReach,
+    payload
   );
 }
 

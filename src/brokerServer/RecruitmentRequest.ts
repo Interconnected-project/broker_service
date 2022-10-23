@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Socket } from 'socket.io';
 
 export default class RecruitmentRequest {
@@ -6,18 +7,21 @@ export default class RecruitmentRequest {
   private _operationId: string;
   private _nodesToReach: number;
   private _servedNodes: number;
+  private _payload: any;
 
   constructor(
     socket: Socket,
     invokingEnpointId: string,
     operationId: string,
-    nodesToReach: number
+    nodesToReach: number,
+    payload: any
   ) {
     this._socket = socket;
     this._invokingEndpointId = invokingEnpointId;
     this._operationId = operationId;
     this._nodesToReach = nodesToReach;
     this._servedNodes = 0;
+    this._payload = payload;
   }
 
   get socket(): Socket {
@@ -38,6 +42,10 @@ export default class RecruitmentRequest {
 
   get servedNodes(): number {
     return this._servedNodes;
+  }
+
+  get payload(): any {
+    return this._payload;
   }
 
   increaseServedNodes(): void {

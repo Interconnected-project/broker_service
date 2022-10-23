@@ -11,6 +11,7 @@ import ConnectionsHub from './ConnectionsHub';
 import Connection from './Connection';
 import applyNodeHandlers from './nodes/applyNodeHandlers';
 import RecruitmentRequestBulletinBoard from './RecruitmentRequestsBulletinBoard';
+import Channels from './Channels';
 
 export default class BrokerServer {
   private httpServer = createServer();
@@ -34,6 +35,9 @@ export default class BrokerServer {
           applyNodeHandlers(connection, this.invokingEndpoints);
           joinRoom(socket, Rooms.NODES);
           this.nodes.add(connection);
+          RecruitmentRequestBulletinBoard.pendingRequestsPayload.forEach((p) =>
+            socket.emit(Channels.RECRUITMENT_BROADCAST, p)
+          );
         } else {
           applyInvokingEndpointHandlers(this.server, connection, this.nodes);
           joinRoom(socket, Rooms.INVOKING_ENDPOINTS);
