@@ -1,3 +1,6 @@
+import checkAndReturnInteger from '../../../../common/util/checkAndReturnInteger';
+import checkAndReturnString from '../../../../common/util/checkAndReturnString';
+
 export default class RecruitmentRequestPayload {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(private payload: any) {
@@ -7,41 +10,14 @@ export default class RecruitmentRequestPayload {
   }
 
   get invokingEndpointId(): string {
-    return this.checkAndReturnString(this.payload.invokingEndpointId);
+    return checkAndReturnString(this.payload.invokingEndpointId);
   }
 
   get operationId(): string {
-    return this.checkAndReturnString(this.payload.operationId);
+    return checkAndReturnString(this.payload.operationId);
   }
 
   get nodesToReach(): number {
-    return this.checkAndReturnInteger(this.payload.nodesToReach);
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private checkAndReturnString(s: any): string {
-    if (
-      s !== null &&
-      s !== undefined &&
-      typeof s === 'string' &&
-      s.trim().length > 0
-    ) {
-      return s.trim();
-    }
-    throw new Error();
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private checkAndReturnInteger(i: any): number {
-    if (
-      i !== null &&
-      i !== undefined &&
-      typeof i === 'number' &&
-      Number.isInteger(i) &&
-      i > 0
-    ) {
-      return i;
-    }
-    throw new Error();
+    return checkAndReturnInteger(this.payload.nodesToReach);
   }
 }
