@@ -1,11 +1,12 @@
 import { createServer } from 'http';
 import { ParsedUrlQuery } from 'querystring';
-import { Server, Socket } from 'socket.io';
+import { Server } from 'socket.io';
 
-import Roles from './Roles';
+import Roles from '../common/Roles';
 import Rooms from './Rooms';
-import { logServer as log } from '../common/util/log';
+import { logBrokerServer as log } from '../common/util/log';
 import applyInvokingEndpointHandlers from './invokingEndpoints/applyInvokingEndpointHandlers';
+import joinRoom from '../common/joinRoom';
 
 export default class BrokerServer {
   private httpServer = createServer();
@@ -23,10 +24,10 @@ export default class BrokerServer {
         const id = this.getId(query);
         const role = this.getRole(query);
         if (role === Roles.NODE) {
-          this.joinRoom(socket, Rooms.NODES);
+          joinRoom(socket, Rooms.NODES);
         } else {
           applyInvokingEndpointHandlers(this.server, socket, id);
-          this.joinRoom(socket, Rooms.INVOKING_ENDPOINTS);
+          joinRoom(socket, Rooms.INVOKING_ENDPOINTS);
         }
         log(role + ' connected: ' + id);
 
@@ -57,10 +58,6 @@ export default class BrokerServer {
       throw new Error();
     }
     return role;
-  }
-
-  private joinRoom(socket: Socket, roomId: string): void {
-    socket.join(roomId);
   }
 
   start(port: number) {

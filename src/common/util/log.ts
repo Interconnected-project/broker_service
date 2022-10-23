@@ -1,6 +1,6 @@
 import EnvVariablesSingleton from '../setup/EnvVariablesSingleton';
 
-const SERVER_TAG = 'SERVER';
+const BROKER_SERVER_TAG = 'BROKER SERVER';
 const NODE_TAG = 'Node';
 const INVOKING_ENDPOINT_TAG = 'Invoking Endpoint';
 
@@ -12,8 +12,8 @@ export default function log(tag: string, msg: string) {
   }
 }
 
-export function logServer(msg: string) {
-  log(SERVER_TAG, msg);
+export function logBrokerServer(msg: string) {
+  log(BROKER_SERVER_TAG, msg);
 }
 
 export function logNode(id: string, msg: string) {
