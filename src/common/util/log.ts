@@ -9,7 +9,7 @@ const isLogEnabled = EnvVariablesSingleton.instance.isLogEnabled;
 
 export default function log(tag: string, msg: string) {
   if (isLogEnabled) {
-    console.log('[' + tag + '] ' + msg + '\n');
+    console.log('[' + tag + '] ' + msg);
   }
 }
 

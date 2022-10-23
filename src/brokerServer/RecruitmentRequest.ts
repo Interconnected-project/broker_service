@@ -36,6 +36,10 @@ export default class RecruitmentRequest {
     return this._nodesToReach;
   }
 
+  get servedNodes(): number {
+    return this._servedNodes;
+  }
+
   increaseServedNodes(): void {
     this._servedNodes += 1;
   }
