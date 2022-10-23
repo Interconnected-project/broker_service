@@ -1,11 +1,15 @@
-import { Server, Socket } from 'socket.io';
+import { Server } from 'socket.io';
+import Connection from '../Connection';
+import ConnectionsHub from '../ConnectionsHub';
+import connectionAccept from './handlers/connectionAccept';
 
-import recruitment from './handlers/recruitment';
+import recruitmentRequest from './handlers/recruitmentRequest';
 
 export default function applyInvokingEndpointHandlers(
   server: Server,
-  socket: Socket,
-  id: string
+  connection: Connection,
+  nodes: ConnectionsHub
 ) {
-  recruitment(server, socket, id);
+  recruitmentRequest(server, connection);
+  connectionAccept(connection, nodes);
 }

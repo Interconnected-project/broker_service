@@ -7,6 +7,9 @@ import Rooms from './Rooms';
 import { logBrokerServer as log } from '../common/util/log';
 import applyInvokingEndpointHandlers from './invokingEndpoints/applyInvokingEndpointHandlers';
 import joinRoom from '../common/joinRoom';
+import ConnectionsHub from './ConnectionsHub';
+import Connection from './Connection';
+import applyNodeHandlers from './nodes/applyNodeHandlers';
 
 export default class BrokerServer {
   private httpServer = createServer();
@@ -17,22 +20,33 @@ export default class BrokerServer {
     },
   });
 
+  private nodes = new ConnectionsHub();
+  private invokingEndpoints = new ConnectionsHub();
+
   constructor() {
     this.server.on('connection', (socket) => {
       const query = socket.handshake.query;
       try {
-        const id = this.getId(query);
+        const connection = new Connection(this.getId(query), socket);
         const role = this.getRole(query);
         if (role === Roles.NODE) {
+          applyNodeHandlers(connection, this.invokingEndpoints);
           joinRoom(socket, Rooms.NODES);
+          this.nodes.add(connection);
         } else {
-          applyInvokingEndpointHandlers(this.server, socket, id);
+          applyInvokingEndpointHandlers(this.server, connection, this.nodes);
           joinRoom(socket, Rooms.INVOKING_ENDPOINTS);
+          this.invokingEndpoints.add(connection);
         }
-        log(role + ' connected: ' + id);
+        log(role + ' connected: ' + connection.id);
 
         socket.on('disconnecting', () => {
-          log(role + ' disconnected: ' + id);
+          if (role === Roles.NODE) {
+            this.nodes.remove(connection.id);
+          } else {
+            this.invokingEndpoints.remove(connection.id);
+          }
+          log(role + ' disconnected: ' + connection.id);
         });
       } catch {
         log('Connection refused: wrong query parameters');
