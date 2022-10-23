@@ -3,13 +3,13 @@ import Connection from '../Connection';
 import ConnectionsHub from '../ConnectionsHub';
 import connectionAccept from './handlers/connectionAccept';
 
-import recruitmentRequest from './handlers/recruitmentRequest';
+import recruitmentRequestHandler from './handlers/recruitmentRequest/recruitmentRequestHandler';
 
 export default function applyInvokingEndpointHandlers(
   server: Server,
   connection: Connection,
   nodes: ConnectionsHub
 ) {
-  recruitmentRequest(server, connection);
+  recruitmentRequestHandler(server, connection);
   connectionAccept(connection, nodes);
 }
