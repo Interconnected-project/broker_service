@@ -1,14 +1,13 @@
 import { createServer } from 'http';
 import { ParsedUrlQuery } from 'querystring';
 import { Server, Socket } from 'socket.io';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const p2p = require('socket.io-p2p-server').Server;
-import Roles from './brokerServer/Roles';
-import Rooms from './brokerServer/Rooms';
-import { joinRoom } from './brokerServer/serverOperations';
-import { logServer as log } from './common/util/log';
 
-export default class SocketServer {
+import Roles from './Roles';
+import Rooms from './Rooms';
+import { logServer as log } from '../common/util/log';
+import applyInvokingEndpointHandlers from './invokingEndpoints/applyInvokingEndpointHandlers';
+
+export default class BrokerServer {
   private httpServer = createServer();
   private server = new Server(this.httpServer, {
     cors: {
@@ -17,26 +16,17 @@ export default class SocketServer {
     },
   });
 
-  constructor(
-    applyNodeHandlers: (server: Server, socket: Socket, id: string) => void,
-    applyInvokingEndpointHandlers: (
-      server: Server,
-      socket: Socket,
-      id: string
-    ) => void
-  ) {
-    this.server.use(p2p);
+  constructor() {
     this.server.on('connection', (socket) => {
       const query = socket.handshake.query;
       try {
         const id = this.getId(query);
         const role = this.getRole(query);
         if (role === Roles.NODE) {
-          applyNodeHandlers(this.server, socket, id);
-          joinRoom(socket, Rooms.NODES);
+          this.joinRoom(socket, Rooms.NODES);
         } else {
           applyInvokingEndpointHandlers(this.server, socket, id);
-          joinRoom(socket, Rooms.INVOKING_ENDPOINTS);
+          this.joinRoom(socket, Rooms.INVOKING_ENDPOINTS);
         }
         log(role + ' connected: ' + id);
 
@@ -69,8 +59,23 @@ export default class SocketServer {
     return role;
   }
 
+  private joinRoom(socket: Socket, roomId: string): void {
+    socket.join(roomId);
+  }
+
   start(port: number) {
     this.httpServer.listen(port);
     log('started on port ' + port);
   }
+}
+
+export function broadcast(
+  server: Server,
+  roomId: string,
+  channel: string,
+  payload: unknown
+): void {
+  server.sockets.to(roomId).emit(channel, payload, {
+    receivers: 'everyone',
+  });
 }

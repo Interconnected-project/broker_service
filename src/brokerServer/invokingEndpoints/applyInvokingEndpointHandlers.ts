@@ -1,10 +1,11 @@
 import { Server, Socket } from 'socket.io';
-import joinChannelHandler from './handlers.ts/joinChannelHandler';
+
+import recruitment from './handlers/recruitment';
 
 export default function applyInvokingEndpointHandlers(
   server: Server,
   socket: Socket,
   id: string
 ) {
-  joinChannelHandler(server, socket, id);
+  recruitment(server, socket, id);
 }

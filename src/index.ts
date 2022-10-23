@@ -1,11 +1,7 @@
 import EnvVariablesSingleton from './common/setup/EnvVariablesSingleton';
-import applyInvokingEndpointHandlers from './invokingEndpoints/applyInvokingEndpointHandlers';
-import SocketServer from './SocketServer';
+import BrokerServer from './brokerServer/BrokerServer';
 
 const env = EnvVariablesSingleton.instance;
-const server = new SocketServer(
-  applyInvokingEndpointHandlers,
-  applyInvokingEndpointHandlers
-);
+const server = new BrokerServer();
 
 server.start(env.port);
