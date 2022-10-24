@@ -27,11 +27,11 @@ export default class Channels {
     return 'INCOMING_CONNECTION';
   }
 
-  static get CONNECTION_ACCEPT(): string {
-    return 'CONNECTION_ACCEPT';
+  static get ANSWER_CONNECTION(): string {
+    return 'ANSWER_CONNECTION';
   }
 
-  static get COMPLETE_CONNECTION(): string {
-    return 'COMPLETE_CONNECTION';
+  static get FINALIZE_CONNECTION(): string {
+    return 'FINALIZE_CONNECTION';
   }
 }
