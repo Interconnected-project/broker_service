@@ -19,8 +19,12 @@ export default class Channels {
     return 'OFFER_NODE';
   }
 
-  static get CONNECTION_ATTEMPT(): string {
-    return 'CONNECTION_ATTEMPT';
+  static get INITIALIZE_CONNECTION(): string {
+    return 'INITIALIZE_CONNECTION';
+  }
+
+  static get INCOMING_CONNECTION(): string {
+    return 'INCOMING_CONNECTION';
   }
 
   static get CONNECTION_ACCEPT(): string {

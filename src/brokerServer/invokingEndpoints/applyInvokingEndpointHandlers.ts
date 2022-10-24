@@ -1,6 +1,6 @@
 import { Server } from 'socket.io';
 import Connection from '../../common/connectionsHub/Connection';
-import connectionAccept from './handlers/connectionAccept';
+import initializeConnectionHandler from './handlers/initializeConnection/initializeConnectionHandler';
 
 import recruitmentRequestHandler from './handlers/recruitmentRequest/recruitmentRequestHandler';
 
@@ -9,5 +9,5 @@ export default function applyInvokingEndpointHandlers(
   connection: Connection
 ) {
   recruitmentRequestHandler(server, connection);
-  connectionAccept(connection);
+  initializeConnectionHandler(connection);
 }

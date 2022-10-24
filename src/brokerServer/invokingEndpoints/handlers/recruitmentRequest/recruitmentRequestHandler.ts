@@ -20,12 +20,12 @@ export default function recruitmentRequestHandler(
         payload
       );
       if (RecruitmentRequestBulletinBoard.publishRequest(recruitmentRequest)) {
-        broadcast(server, Rooms.NODES, Channels.RECRUITMENT_BROADCAST, payload);
         log(
           connection.id,
           Channels.RECRUITMENT_REQUEST,
           'broadcasting ' + Channels.RECRUITMENT_BROADCAST + ' to Nodes'
         );
+        broadcast(server, Rooms.NODES, Channels.RECRUITMENT_BROADCAST, payload);
       } else {
         onError(connection);
       }
