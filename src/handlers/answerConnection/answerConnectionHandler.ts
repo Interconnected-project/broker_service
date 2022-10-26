@@ -3,27 +3,40 @@ import { logNode as log } from '../../common/util/log';
 import Connection from '../../common/connectionsHub/Connection';
 import AnswerConnectionPayload from './AnswerConnectionPayload';
 import InvokingEndpointHub from '../../brokerServer/invokingEndpoints/InvokingEndpointsHub';
+import Roles from '../../common/enums/Roles';
+import NodesHub from '../../brokerServer/nodes/NodesHub';
 
 export default function answerConnectionHandler(connection: Connection) {
   connection.socket.on(Channels.ANSWER_CONNECTION, function (payload) {
     try {
       const answerConnectionPayload = new AnswerConnectionPayload(payload);
-      const invokingEndpoint = InvokingEndpointHub.connections.get(
-        answerConnectionPayload.invokingEndpointId
-      );
-      if (invokingEndpoint !== undefined) {
-        log(
-          connection.id,
-          Channels.ANSWER_CONNECTION,
-          'send ' +
-            Channels.FINALIZE_CONNECTION +
-            ' to Invoking Endpoint ' +
-            answerConnectionPayload.invokingEndpointId
-        );
-        invokingEndpoint.socket.emit(Channels.FINALIZE_CONNECTION, payload);
-      } else {
-        onError(connection);
+      if (connection.id === answerConnectionPayload.answererId) {
+        var initiator: Connection | undefined = undefined;
+        if (answerConnectionPayload.initiatorRole === Roles.NODE) {
+          initiator = NodesHub.connections.get(
+            answerConnectionPayload.initiatorId
+          );
+        } else {
+          initiator = InvokingEndpointHub.connections.get(
+            answerConnectionPayload.initiatorId
+          );
+        }
+        if (initiator !== undefined) {
+          log(
+            connection.id,
+            Channels.ANSWER_CONNECTION,
+            'send ' +
+              Channels.FINALIZE_CONNECTION +
+              ' to ' +
+              answerConnectionPayload.initiatorRole +
+              ' ' +
+              answerConnectionPayload.invokingEndpointId
+          );
+          initiator.socket.emit(Channels.FINALIZE_CONNECTION, payload);
+          return;
+        }
       }
+      onError(connection);
     } catch {
       onError(connection);
     }
