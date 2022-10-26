@@ -12,28 +12,32 @@ export default function recruitmentAcceptHandler(connection: Connection) {
   connection.socket.on(Channels.RECRUITMENT_ACCEPT, function (payload) {
     try {
       const recruitmentAcceptPayload = new RecruitmentAcceptPayload(payload);
-      const recruitmentRequest = RecruitmentRequestBulletinBoard.acceptRequest(
-        recruitmentAcceptPayload.invokingEndpointId,
-        recruitmentAcceptPayload.operationId,
-        recruitmentAcceptPayload.initiatorId,
-        recruitmentAcceptPayload.initiatorRole
-      );
-      var initiator: Connection | undefined = getInitiator(recruitmentRequest);
-      if (initiator !== undefined) {
-        initiator.socket.emit(Channels.OFFER_NODE, payload);
-        log(
-          connection.id,
-          Channels.RECRUITMENT_ACCEPT,
-          'send ' +
-            Channels.OFFER_NODE +
-            ' to ' +
-            recruitmentAcceptPayload.initiatorRole +
-            ' ' +
-            recruitmentAcceptPayload.invokingEndpointId
-        );
-      } else {
-        onError(connection);
+      if (connection.id === recruitmentAcceptPayload.answererId) {
+        const recruitmentRequest =
+          RecruitmentRequestBulletinBoard.acceptRequest(
+            recruitmentAcceptPayload.invokingEndpointId,
+            recruitmentAcceptPayload.operationId,
+            recruitmentAcceptPayload.initiatorId,
+            recruitmentAcceptPayload.initiatorRole
+          );
+        var initiator: Connection | undefined =
+          getInitiator(recruitmentRequest);
+        if (initiator !== undefined) {
+          initiator.socket.emit(Channels.OFFER_NODE, payload);
+          log(
+            connection.id,
+            Channels.RECRUITMENT_ACCEPT,
+            'send ' +
+              Channels.OFFER_NODE +
+              ' to ' +
+              recruitmentAcceptPayload.initiatorRole +
+              ' ' +
+              recruitmentAcceptPayload.invokingEndpointId
+          );
+          return;
+        }
       }
+      onError(connection);
     } catch {
       onError(connection);
     }
