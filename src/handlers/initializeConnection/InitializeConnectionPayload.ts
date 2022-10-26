@@ -1,17 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import checkAndReturnString from '../../common/util/checkAndReturnString';
-import RecruitmentRequestPayload from '../recruitmentRequest/RecruitmentRequestPayload';
+import RecruitmentAcceptPayload from '../recruitmentAccept/RecruitmentAcceptPayload';
 
-class InitializeConnectionPayload extends RecruitmentRequestPayload {
-  private _payload: any;
-
+class InitializeConnectionPayload extends RecruitmentAcceptPayload {
   constructor(payload: any) {
     super(payload);
-    this._payload = payload;
-  }
-
-  get nodeId(): string {
-    return checkAndReturnString(this._payload.nodeId);
+    if (payload.signal === undefined || payload.signal === null) {
+      throw new Error();
+    }
   }
 }
 
