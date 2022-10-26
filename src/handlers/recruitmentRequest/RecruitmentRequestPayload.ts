@@ -1,5 +1,5 @@
-import checkAndReturnInteger from '../../../../common/util/checkAndReturnInteger';
-import checkAndReturnString from '../../../../common/util/checkAndReturnString';
+import checkAndReturnInteger from '../../common/util/checkAndReturnInteger';
+import checkAndReturnString from '../../common/util/checkAndReturnString';
 
 export default class RecruitmentRequestPayload {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

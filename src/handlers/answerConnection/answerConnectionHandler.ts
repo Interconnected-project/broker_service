@@ -1,8 +1,8 @@
-import Channels from '../../../../common/enums/Channels';
-import { logNode as log } from '../../../../common/util/log';
-import Connection from '../../../../common/connectionsHub/Connection';
+import Channels from '../../common/enums/Channels';
+import { logNode as log } from '../../common/util/log';
+import Connection from '../../common/connectionsHub/Connection';
 import AnswerConnectionPayload from './AnswerConnectionPayload';
-import InvokingEndpointHub from '../../../invokingEndpoints/InvokingEndpointsHub';
+import InvokingEndpointHub from '../../brokerServer/invokingEndpoints/InvokingEndpointsHub';
 
 export default function answerConnectionHandler(connection: Connection) {
   connection.socket.on(Channels.ANSWER_CONNECTION, function (payload) {

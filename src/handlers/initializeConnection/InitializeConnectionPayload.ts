@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import checkAndReturnString from '../../../../common/util/checkAndReturnString';
+import checkAndReturnString from '../../common/util/checkAndReturnString';
 import RecruitmentRequestPayload from '../recruitmentRequest/RecruitmentRequestPayload';
 
 class InitializeConnectionPayload extends RecruitmentRequestPayload {

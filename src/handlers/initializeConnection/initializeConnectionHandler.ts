@@ -1,7 +1,7 @@
-import { logInvokingEndpoint as log } from '../../../../common/util/log';
-import Channels from '../../../../common/enums/Channels';
-import Connection from '../../../../common/connectionsHub/Connection';
-import NodesHub from '../../../nodes/NodesHub';
+import { logInvokingEndpoint as log } from '../../common/util/log';
+import Channels from '../../common/enums/Channels';
+import Connection from '../../common/connectionsHub/Connection';
+import NodesHub from '../../brokerServer/nodes/NodesHub';
 import InitializeConnectionPayload from './InitializeConnectionPayload';
 
 export default function initializeConnectionHandler(connection: Connection) {

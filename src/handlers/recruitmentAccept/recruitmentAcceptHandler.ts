@@ -1,8 +1,8 @@
-import Channels from '../../../../common/enums/Channels';
-import RecruitmentRequestBulletinBoard from '../../../RecruitmentRequestsBulletinBoard';
+import { logNode as log } from '../../common/util/log';
+import RecruitmentRequestBulletinBoard from '../../brokerServer/RecruitmentRequestsBulletinBoard';
+import Connection from '../../common/connectionsHub/Connection';
+import Channels from '../../common/enums/Channels';
 import RecruitmentAcceptPayload from './RecruitmentAcceptPayload';
-import { logNode as log } from '../../../../common/util/log';
-import Connection from '../../../../common/connectionsHub/Connection';
 
 export default function recruitmentAcceptHandler(connection: Connection) {
   connection.socket.on(Channels.RECRUITMENT_ACCEPT, function (payload) {
