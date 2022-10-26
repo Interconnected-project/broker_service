@@ -20,7 +20,7 @@ export default function recruitmentAcceptHandler(connection: Connection) {
             recruitmentAcceptPayload.initiatorRole
           );
         if (recruitmentRequest !== undefined) {
-          var initiator: Connection | undefined = undefined;
+          let initiator: Connection | undefined = undefined;
           if (recruitmentRequest.initiatorRole === Roles.INVOKING_ENDPOINT) {
             initiator = InvokingEndpointHub.connections.get(
               recruitmentRequest.initiatorId

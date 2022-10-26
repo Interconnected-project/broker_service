@@ -11,7 +11,7 @@ export default function answerConnectionHandler(connection: Connection) {
     try {
       const answerConnectionPayload = new AnswerConnectionPayload(payload);
       if (connection.id === answerConnectionPayload.answererId) {
-        var initiator: Connection | undefined = undefined;
+        let initiator: Connection | undefined = undefined;
         if (answerConnectionPayload.initiatorRole === Roles.NODE) {
           initiator = NodesHub.connections.get(
             answerConnectionPayload.initiatorId
