@@ -1,4 +1,4 @@
-import { Server, Socket } from 'socket.io';
+import { Server } from 'socket.io';
 
 import { logInvokingEndpoint as log } from '../../common/util/log';
 import { broadcast } from '../../brokerServer/BrokerServer';
@@ -15,10 +15,7 @@ export default function recruitmentRequestHandler(
 ) {
   connection.socket.on(Channels.RECRUITMENT_REQUEST, function (payload) {
     try {
-      const recruitmentRequest = buildRecruitingRequest(
-        connection.socket,
-        payload
-      );
+      const recruitmentRequest = buildRecruitingRequest(payload, connection);
       if (RecruitmentRequestBulletinBoard.publishRequest(recruitmentRequest)) {
         log(
           connection.id,
@@ -36,18 +33,23 @@ export default function recruitmentRequestHandler(
 }
 
 function buildRecruitingRequest(
-  socket: Socket,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  payload: any
+  payload: any,
+  connection: Connection
 ): RecruitmentRequest {
   const recruitmentRequestPayload = new RecruitmentRequestPayload(payload);
-  return new RecruitmentRequest(
-    socket,
+  const recruitmentRequest = new RecruitmentRequest(
     recruitmentRequestPayload.invokingEndpointId,
     recruitmentRequestPayload.operationId,
+    recruitmentRequestPayload.initiatorId,
+    recruitmentRequestPayload.initiatorRole,
     recruitmentRequestPayload.nodesToReach,
     payload
   );
+  if (connection.id !== recruitmentRequest.invokingEndpointId) {
+    throw new Error();
+  }
+  return recruitmentRequest;
 }
 
 function onError(connection: Connection): void {
