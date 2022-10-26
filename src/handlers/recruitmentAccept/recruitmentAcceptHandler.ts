@@ -3,6 +3,10 @@ import RecruitmentRequestBulletinBoard from '../../brokerServer/RecruitmentReque
 import Connection from '../../common/connectionsHub/Connection';
 import Channels from '../../common/enums/Channels';
 import RecruitmentAcceptPayload from './RecruitmentAcceptPayload';
+import Roles from '../../common/enums/Roles';
+import InvokingEndpointHub from '../../brokerServer/invokingEndpoints/InvokingEndpointsHub';
+import NodesHub from '../../brokerServer/nodes/NodesHub';
+import RecruitmentRequest from '../../brokerServer/RecruitmentRequest';
 
 export default function recruitmentAcceptHandler(connection: Connection) {
   connection.socket.on(Channels.RECRUITMENT_ACCEPT, function (payload) {
@@ -10,16 +14,21 @@ export default function recruitmentAcceptHandler(connection: Connection) {
       const recruitmentAcceptPayload = new RecruitmentAcceptPayload(payload);
       const recruitmentRequest = RecruitmentRequestBulletinBoard.acceptRequest(
         recruitmentAcceptPayload.invokingEndpointId,
-        recruitmentAcceptPayload.operationId
+        recruitmentAcceptPayload.operationId,
+        recruitmentAcceptPayload.initiatorId,
+        recruitmentAcceptPayload.initiatorRole
       );
-      if (recruitmentRequest !== undefined) {
-        recruitmentRequest.socket.emit(Channels.OFFER_NODE, payload);
+      var initiator: Connection | undefined = getInitiator(recruitmentRequest);
+      if (initiator !== undefined) {
+        initiator.socket.emit(Channels.OFFER_NODE, payload);
         log(
           connection.id,
           Channels.RECRUITMENT_ACCEPT,
           'send ' +
             Channels.OFFER_NODE +
-            ' to Invoking Endpoint ' +
+            ' to ' +
+            recruitmentAcceptPayload.initiatorRole +
+            ' ' +
             recruitmentAcceptPayload.invokingEndpointId
         );
       } else {
@@ -34,4 +43,17 @@ export default function recruitmentAcceptHandler(connection: Connection) {
 function onError(connection: Connection): void {
   connection.socket.emit(Channels.RECRUITMENT_ACCEPT, 'ERROR');
   log(connection.id, Channels.RECRUITMENT_ACCEPT, 'ERROR');
+}
+
+function getInitiator(
+  recruitmentRequest: RecruitmentRequest | undefined
+): Connection | undefined {
+  if (recruitmentRequest === undefined) {
+    return undefined;
+  }
+  if (recruitmentRequest.initiatorRole === Roles.INVOKING_ENDPOINT) {
+    return InvokingEndpointHub.connections.get(recruitmentRequest.initiatorId);
+  } else {
+    return NodesHub.connections.get(recruitmentRequest.initiatorId);
+  }
 }

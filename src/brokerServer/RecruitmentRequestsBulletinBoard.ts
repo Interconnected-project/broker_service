@@ -9,37 +9,49 @@ export default class RecruitmentRequestBulletinBoard {
 
   static publishRequest(request: RecruitmentRequest): boolean {
     if (
-      this.find(request.invokingEndpointId, request.operationId) !== undefined
+      this.find(
+        request.invokingEndpointId,
+        request.operationId,
+        request.initiatorId,
+        request.initiatorRole
+      ) !== undefined
     ) {
       log(
         'duplicated recruitment request ' +
-          this.getRequestPair(request) +
+          this.getRequestInfo(request) +
           ' rejected'
       );
       return false;
     }
     this.requests.push(request);
-    log('recruitment request ' + this.getRequestPair(request) + ' published');
+    log('recruitment request ' + this.getRequestInfo(request) + ' published');
     return true;
   }
 
   static acceptRequest(
     invokingEndpointId: string,
-    operationId: string
+    operationId: string,
+    initiatorId: string,
+    initiatorRole: string
   ): RecruitmentRequest | undefined {
-    const request = this.find(invokingEndpointId, operationId);
+    const request = this.find(
+      invokingEndpointId,
+      operationId,
+      initiatorId,
+      initiatorRole
+    );
     if (request === undefined) {
       return undefined;
     }
     request.increaseServedNodes();
     log(
       'served recruitment request ' +
-        this.getRequestPair(request) +
+        this.getRequestInfo(request) +
         this.getServedCount(request)
     );
     if (request.isFulfilled) {
       this.requests.splice(this.requests.indexOf(request), 1);
-      log('fulfilled recruitment request ' + this.getRequestPair(request));
+      log('fulfilled recruitment request ' + this.getRequestInfo(request));
     }
     return request;
   }
@@ -60,18 +72,32 @@ export default class RecruitmentRequestBulletinBoard {
 
   private static find(
     invokingEndpointId: string,
-    operationId: string
+    operationId: string,
+    initiatorId: string,
+    initiatorRole: string
   ): RecruitmentRequest | undefined {
     return this.requests.find((r) => {
       return (
         r.invokingEndpointId === invokingEndpointId &&
-        r.operationId === operationId
+        r.operationId === operationId &&
+        r.initiatorId === initiatorId &&
+        r.initiatorRole === initiatorRole
       );
     });
   }
 
-  private static getRequestPair(request: RecruitmentRequest): string {
-    return '(' + request.invokingEndpointId + ', ' + request.operationId + ')';
+  private static getRequestInfo(request: RecruitmentRequest): string {
+    return (
+      '(' +
+      request.invokingEndpointId +
+      ', ' +
+      request.operationId +
+      ', ' +
+      request.initiatorRole +
+      ', ' +
+      request.initiatorId +
+      ')'
+    );
   }
 
   private static getServedCount(request: RecruitmentRequest): string {
