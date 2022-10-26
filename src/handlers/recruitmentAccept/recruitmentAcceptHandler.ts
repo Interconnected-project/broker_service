@@ -6,7 +6,6 @@ import RecruitmentAcceptPayload from './RecruitmentAcceptPayload';
 import Roles from '../../common/enums/Roles';
 import InvokingEndpointHub from '../../brokerServer/invokingEndpoints/InvokingEndpointsHub';
 import NodesHub from '../../brokerServer/nodes/NodesHub';
-import RecruitmentRequest from '../../brokerServer/RecruitmentRequest';
 
 export default function recruitmentAcceptHandler(connection: Connection) {
   connection.socket.on(Channels.RECRUITMENT_ACCEPT, function (payload) {
@@ -20,24 +19,38 @@ export default function recruitmentAcceptHandler(connection: Connection) {
             recruitmentAcceptPayload.initiatorId,
             recruitmentAcceptPayload.initiatorRole
           );
-        var initiator: Connection | undefined =
-          getInitiator(recruitmentRequest);
-        if (initiator !== undefined) {
-          initiator.socket.emit(Channels.OFFER_NODE, payload);
-          log(
-            connection.id,
-            Channels.RECRUITMENT_ACCEPT,
-            'send ' +
-              Channels.OFFER_NODE +
-              ' to ' +
-              recruitmentAcceptPayload.initiatorRole +
-              ' ' +
-              recruitmentAcceptPayload.invokingEndpointId
-          );
-          return;
+        if (recruitmentRequest !== undefined) {
+          var initiator: Connection | undefined = undefined;
+          if (recruitmentRequest.initiatorRole === Roles.INVOKING_ENDPOINT) {
+            initiator = InvokingEndpointHub.connections.get(
+              recruitmentRequest.initiatorId
+            );
+          } else {
+            initiator = NodesHub.connections.get(
+              recruitmentRequest.initiatorId
+            );
+          }
+          if (initiator !== undefined) {
+            initiator.socket.emit(Channels.OFFER_NODE, payload);
+            log(
+              connection.id,
+              Channels.RECRUITMENT_ACCEPT,
+              'send ' +
+                Channels.OFFER_NODE +
+                ' to ' +
+                recruitmentAcceptPayload.initiatorRole +
+                ' ' +
+                recruitmentAcceptPayload.invokingEndpointId
+            );
+          } else {
+            onError(connection);
+          }
+        } else {
+          onAlreadyFulfilled(connection);
         }
+      } else {
+        onError(connection);
       }
-      onError(connection);
     } catch {
       onError(connection);
     }
@@ -49,15 +62,6 @@ function onError(connection: Connection): void {
   log(connection.id, Channels.RECRUITMENT_ACCEPT, 'ERROR');
 }
 
-function getInitiator(
-  recruitmentRequest: RecruitmentRequest | undefined
-): Connection | undefined {
-  if (recruitmentRequest === undefined) {
-    return undefined;
-  }
-  if (recruitmentRequest.initiatorRole === Roles.INVOKING_ENDPOINT) {
-    return InvokingEndpointHub.connections.get(recruitmentRequest.initiatorId);
-  } else {
-    return NodesHub.connections.get(recruitmentRequest.initiatorId);
-  }
+function onAlreadyFulfilled(connection: Connection): void {
+  log(connection.id, Channels.RECRUITMENT_ACCEPT, 'already fulfilled');
 }
