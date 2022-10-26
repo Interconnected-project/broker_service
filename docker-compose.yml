@@ -4,9 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - NODES_PORT=8000
-      - INVOKING_ENDPOINTS_PORT=9000
+      - PORT=8000
     ports:
       - 8000:8000
-      - 9000:9000
     image: broker_service
