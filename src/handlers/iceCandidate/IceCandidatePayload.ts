@@ -3,18 +3,26 @@ import checkAndReturnString from '../../common/util/checkAndReturnString';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default class IceCandidatePayload {
-  private _initiatorId: string;
-  private _initiatorRole: string;
-  private _answererId: string;
+  private _fromId: string;
+  private _senderRole: string;
+  private _toId: string;
+  private _receiverRole: string;
   private _candidate: any;
 
   constructor(payload: any) {
-    this._initiatorId = checkAndReturnString(payload.initiatorId);
-    this._answererId = checkAndReturnString(payload.answererId);
-    this._initiatorRole = checkAndReturnString(payload.initiatorRole);
+    this._fromId = checkAndReturnString(payload.fromId);
+    this._senderRole = checkAndReturnString(payload.senderRole);
     if (
-      this._initiatorRole !== Roles.NODE &&
-      this._initiatorRole !== Roles.INVOKING_ENDPOINT
+      this._senderRole !== Roles.NODE &&
+      this._senderRole !== Roles.INVOKING_ENDPOINT
+    ) {
+      throw new Error();
+    }
+    this._toId = checkAndReturnString(payload.toId);
+    this._receiverRole = checkAndReturnString(payload.receiverRole);
+    if (
+      this._receiverRole !== Roles.NODE &&
+      this._receiverRole !== Roles.INVOKING_ENDPOINT
     ) {
       throw new Error();
     }
@@ -24,12 +32,20 @@ export default class IceCandidatePayload {
     }
   }
 
-  get initiatorId(): string {
-    return this._initiatorId;
+  get fromId(): string {
+    return this._fromId;
   }
 
-  get answererId(): string {
-    return this._answererId;
+  get senderRole(): string {
+    return this._senderRole;
+  }
+
+  get toId(): string {
+    return this._toId;
+  }
+
+  get receiverRole(): string {
+    return this._receiverRole;
   }
 
   get candidate(): any {
