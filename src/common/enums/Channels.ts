@@ -34,4 +34,8 @@ export default class Channels {
   static get FINALIZE_CONNECTION(): string {
     return 'FINALIZE_CONNECTION';
   }
+
+  static get ICE_CANDIDATE(): string {
+    return 'ICE_CANDIDATE';
+  }
 }
