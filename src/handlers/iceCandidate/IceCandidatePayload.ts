@@ -1,14 +1,23 @@
+import Roles from '../../common/enums/Roles';
 import checkAndReturnString from '../../common/util/checkAndReturnString';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default class IceCandidatePayload {
   private _initiatorId: string;
+  private _initiatorRole: string;
   private _answererId: string;
   private _candidate: any;
 
   constructor(payload: any) {
     this._initiatorId = checkAndReturnString(payload.initiatorId);
     this._answererId = checkAndReturnString(payload.answererId);
+    this._initiatorRole = checkAndReturnString(payload.initiatorRole);
+    if (
+      this._initiatorRole !== Roles.NODE &&
+      this._initiatorRole !== Roles.INVOKING_ENDPOINT
+    ) {
+      throw new Error();
+    }
     this._candidate = payload.candidate;
     if (this._candidate === undefined || this._candidate === null) {
       throw new Error();

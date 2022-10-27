@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Roles from '../../common/enums/Roles';
 import checkAndReturnInteger from '../../common/util/checkAndReturnInteger';
 import checkAndReturnString from '../../common/util/checkAndReturnString';
 
 export default class RecruitmentRequestPayload {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _invokingEndpointId: string;
   private _initiatorId: string;
   private _initiatorRole: string;
