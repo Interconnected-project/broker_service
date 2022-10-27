@@ -4,7 +4,7 @@ import RecruitmentAcceptPayload from '../recruitmentAccept/RecruitmentAcceptPayl
 class InitializeConnectionPayload extends RecruitmentAcceptPayload {
   constructor(payload: any) {
     super(payload);
-    if (payload.signal === undefined || payload.signal === null) {
+    if (payload.sdp === undefined || payload.sdp === null) {
       throw new Error();
     }
   }
