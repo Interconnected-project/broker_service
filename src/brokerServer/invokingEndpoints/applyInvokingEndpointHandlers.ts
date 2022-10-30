@@ -1,15 +1,14 @@
 import { Server } from 'socket.io';
 import Connection from '../../common/connectionsHub/Connection';
-import iceCandidateHandler from '../../handlers/iceCandidate/iceCandidateHandler';
-import initializeConnectionHandler from '../../handlers/initializeConnection/initializeConnectionHandler';
-
-import recruitmentRequestHandler from '../../handlers/recruitmentRequest/recruitmentRequestHandler';
+import iceCandidateHandler from '../../handlers/iceCandidateHandler';
+import requestConnectionHandler from '../../handlers/requestConnectionHandler';
+import recruitmentRequestHandler from '../../handlers/recruitmentRequestHandler';
 
 export default function applyInvokingEndpointHandlers(
   server: Server,
   connection: Connection
 ) {
   recruitmentRequestHandler(server, connection);
-  initializeConnectionHandler(connection);
+  requestConnectionHandler(connection);
   iceCandidateHandler(connection);
 }

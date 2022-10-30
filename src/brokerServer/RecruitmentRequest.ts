@@ -1,44 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default class RecruitmentRequest {
-  private _invokingEndpointId: string;
   private _operationId: string;
-  private _initiatorId: string;
-  private _initiatorRole: string;
+  private _masterId: string;
+  private _masterRole: string;
   private _nodesToReach: number;
   private _servedNodes: number;
   private _payload: any;
 
   constructor(
-    invokingEnpointId: string,
     operationId: string,
-    initiatorId: string,
-    initiatorRole: string,
+    masterId: string,
+    masterRole: string,
     nodesToReach: number,
     payload: any
   ) {
-    this._invokingEndpointId = invokingEnpointId;
     this._operationId = operationId;
-    this._initiatorId = initiatorId;
-    this._initiatorRole = initiatorRole;
+    this._masterId = masterId;
+    this._masterRole = masterRole;
     this._nodesToReach = nodesToReach;
     this._servedNodes = 0;
     this._payload = payload;
-  }
-
-  get invokingEndpointId(): string {
-    return this._invokingEndpointId;
   }
 
   get operationId(): string {
     return this._operationId;
   }
 
-  get initiatorId(): string {
-    return this._initiatorId;
+  get masterId(): string {
+    return this._masterId;
   }
 
-  get initiatorRole(): string {
-    return this._initiatorRole;
+  get masterRole(): string {
+    return this._masterRole;
   }
 
   get nodesToReach(): number {

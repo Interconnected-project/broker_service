@@ -30,7 +30,7 @@ export default class BrokerServer {
         const connection = new Connection(this.getId(query), socket);
         const role = this.getRole(query);
         if (role === Roles.NODE) {
-          applyNodeHandlers(connection);
+          applyNodeHandlers(this.server, connection);
           joinRoom(socket, Rooms.NODES);
           NodesHub.connections.add(connection);
           RecruitmentRequestBulletinBoard.pendingRequestsPayload.forEach((p) =>
