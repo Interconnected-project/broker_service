@@ -48,8 +48,8 @@ export default class BrokerServer {
             NodesHub.connections.remove(connection.id);
           } else {
             InvokingEndpointHub.connections.remove(connection.id);
-            RecruitmentRequestBulletinBoard.revokeRequests(connection.id);
           }
+          RecruitmentRequestBulletinBoard.revokeRequests(connection.id);
           log(role + ' disconnected: ' + connection.id);
         });
       } catch {
