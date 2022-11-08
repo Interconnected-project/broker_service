@@ -26,4 +26,8 @@ export default class Channels {
   static get ICE_CANDIDATE(): string {
     return 'ICE_CANDIDATE';
   }
+
+  static get STATUS(): string {
+    return 'STATUS';
+  }
 }
