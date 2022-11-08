@@ -5,6 +5,7 @@ import requestConnectionHandler from '../../handlers/requestConnectionHandler';
 import recruitmentAcceptHandler from '../../handlers/recruitmentAcceptHandler';
 import recruitmentRequestHandler from '../../handlers/recruitmentRequestHandler';
 import { Server } from 'socket.io';
+import statusHandler from '../../handlers/statusHandler';
 
 export default function applyNodeHandlers(
   server: Server,
@@ -15,4 +16,5 @@ export default function applyNodeHandlers(
   requestConnectionHandler(connection);
   answerConnectionHandler(connection);
   iceCandidateHandler(connection);
+  statusHandler(connection);
 }
