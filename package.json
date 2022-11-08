@@ -1,6 +1,6 @@
 {
   "name": "broker_service",
-  "version": "0.5.1",
+  "version": "1.0.0",
   "description": "TODO",
   "main": "dist/index.js",
   "scripts": {
@@ -19,7 +19,6 @@
   },
   "keywords": [],
   "author": "Alessandro Talmi",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Interconnected-project/broker_service/issues"
   },
